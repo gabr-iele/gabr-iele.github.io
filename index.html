@@ -1,36 +1,36 @@
 <!DOCTYPE html>
 <html>
 	<head>
-    	<title>Accelerometer Example | Generic Sensor API | mobiForge</title>  
-     	<meta name="viewport" content="width=device-width, initial-scale=1">
-     	<meta name="author" content="Ruadhan O'Donoghue">
-     	<meta charset="UTF-8">
-  	</head>
-  	<body>
+		<title>Accelerometer Example | Generic Sensor API | mobiForge</title>  
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="author" content="Ruadhan O'Donoghue">
+		<meta charset="UTF-8">
+	</head>
+	<body>
 
-    	<h1>Accelerometer raw data</h1>
-    	<p><a href="https://mobiforge.com/design-development/the-generic-sensor-api">The Generic Sensor API</a> on <a href="https://mobiforge.com">mobiForge.com</a></p>
-    	<div id="status">No data</div>
+		<h1>Accelerometer raw data</h1>
+		<p><a href="https://mobiforge.com/design-development/the-generic-sensor-api">The Generic Sensor API</a> on <a href="https://mobiforge.com">mobiForge.com</a></p>
+		<div id="status">No data</div>
 
-    	<script>
-      		let status = document.getElementById('status');
-      		if ( 'Accelerometer' in window ) {
-      			navigator.permissions.query({ name: 'accelerometer' }).then(result => {
-          			if (result.state === 'denied') {
-            			console.log('Permission to use accelerometer sensor is denied.');
-  	    				return;
-   	  				}
+		<script>
+			let status = document.getElementById('status');
+			if ( 'Accelerometer' in window ) {
+				navigator.permissions.query({ name: 'accelerometer' }).then(result => {
+					if (result.state === 'denied') {
+						console.log('Permission to use accelerometer sensor is denied.');
+						return;
+					}
 
-		  			let acl = new Accelerometer({frequency: 1});
-		  			acl.addEventListener('activate', () => console.log('Ready to measure.'));
-	  				acl.addEventListener('error', error => console.log(`Error: ${error.name}`));
-	  				acl.addEventListener('reading', () => {
-	    				console.log("x: "+acl.x+", y: "+acl.y+", z: "+acl.z);
-	  				});
-	  				acl.start();
-      			});
-      		}
-	      		else status.innerHTML = 'Accelerometer not supported';
-    	</script>
+					let acl = new Accelerometer({frequency: 1});
+					acl.addEventListener('activate', () => console.log('Ready to measure.'));
+					acl.addEventListener('error', error => console.log(`Error: ${error.name}`));
+					acl.addEventListener('reading', () => {
+						console.log("x: "+acl.x+", y: "+acl.y+", z: "+acl.z);
+					});
+					acl.start();
+				});
+			}
+			else status.innerHTML = 'Accelerometer not supported';
+		</script>
 	</body>
 </html>
