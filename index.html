@@ -25,7 +25,7 @@
 					acl.addEventListener('activate', () => console.log('Ready to measure.'));
 					acl.addEventListener('error', error => console.log(`Error: ${error.name}`));
 					acl.addEventListener('reading', () => {
-						status.innerHTML = "x: " + acl.x;
+						status.innerHTML = "x: " + acl.x + "<br>y: " + acl.y + "<br>z: " + acl.z;
 					});
 					acl.start();
 				});
