@@ -16,17 +16,11 @@
 				acl.addEventListener('reading', () => {
 					status.innerHTML = "x: " + acl.x + "<br>y: " + acl.y + "<br>z: " + acl.z;
 				});
-				acl.start();
+				document.getElementById("start").onclick = {acl.start();};
+				document.getElementById("stop").onclick = {acl.stop();};
 			}
 			else status.innerHTML = 'Accelerometer not supported';
-			
-			function startAcl() {
-				acl.start();
-			}
-			
-			function stopAcl() {
-				acl.stop();
-			}
+
 		</script>
 	</head>
 	<body>
@@ -35,7 +29,7 @@
 		<p><a href="https://mobiforge.com/design-development/the-generic-sensor-api">The Generic Sensor API</a> on <a href="https://mobiforge.com">mobiForge.com</a></p>
 		<div id="status">No data</div>
 
-		<button name="start" onclick="startAcl();">Start</button>
-		<button name="stop" onclick="stopAcl();">Stop</button>
+		<button name="start">Start</button>
+		<button name="stop">Stop</button>
 	</body>
 </html>
