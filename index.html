@@ -7,23 +7,25 @@
 		<meta charset="UTF-8">
 		
 		<script type="text/javascript">
-			function startAcl(e) {
-				let status = document.getElementById('status');
-				if ( 'Accelerometer' in window ) {
-					let acl = new Accelerometer({frequency: 1});
-					acl.addEventListener('activate', () => console.log('Ready to measure.'));
-					acl.addEventListener('error', error => console.log(`Error: ${error.name}`));
-					acl.addEventListener('reading', () => {
-						status.innerHTML = "x: " + acl.x + "<br>y: " + acl.y + "<br>z: " + acl.z;
-					});
-					document.getElementById("stop").sensor = acl;
-					acl.start();
-				}
-				else status.innerHTML = 'Accelerometer not supported';
+			
+			let status = document.getElementById('status');
+			if ( 'Accelerometer' in window ) {
+				let acl = new Accelerometer({frequency: 1});
+				acl.addEventListener('activate', () => console.log('Ready to measure.'));
+				acl.addEventListener('error', error => console.log(`Error: ${error.name}`));
+				acl.addEventListener('reading', () => {
+					status.innerHTML = "x: " + acl.x + "<br>y: " + acl.y + "<br>z: " + acl.z;
+				});
+				acl.start();
+			}
+			else status.innerHTML = 'Accelerometer not supported';
+			
+			function startAcl() {
+				acl.start();
 			}
 			
-			function stopAcl(e) {
-				e.target.sensor.stop();
+			function stopAcl() {
+				acl.stop();
 			}
 		</script>
 	</head>
@@ -33,7 +35,7 @@
 		<p><a href="https://mobiforge.com/design-development/the-generic-sensor-api">The Generic Sensor API</a> on <a href="https://mobiforge.com">mobiForge.com</a></p>
 		<div id="status">No data</div>
 
-		<button id="start" onclick="startAcl();">Start</button>
-		<button id="stop" onclick="stopAcl();">Stop</button>
+		<button name="start" onclick="startAcl();">Start</button>
+		<button name="stop" onclick="stopAcl();">Stop</button>
 	</body>
 </html>
