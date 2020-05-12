@@ -6,22 +6,6 @@
 		<meta name="author" content="Ruadhan O'Donoghue">
 		<meta charset="UTF-8">
 		
-		<script type="text/javascript">
-			
-			let status = document.getElementById('status');
-			if ( 'Accelerometer' in window ) {
-				let acl = new Accelerometer({frequency: 1});
-				acl.addEventListener('activate', () => console.log('Ready to measure.'));
-				acl.addEventListener('error', error => console.log(`Error: ${error.name}`));
-				acl.addEventListener('reading', () => {
-					status.innerHTML = "x: " + acl.x + "<br>y: " + acl.y + "<br>z: " + acl.z;
-				});
-				document.getElementById("start").onclick = {acl.start();};
-				document.getElementById("stop").onclick = {acl.stop();};
-			}
-			else status.innerHTML = 'Accelerometer not supported';
-
-		</script>
 	</head>
 	<body>
 
@@ -31,5 +15,21 @@
 
 		<button id="start">Start</button>
 		<button id="stop">Stop</button>
+
+		<script>
+			let status = document.getElementById('status');
+			if ( 'Accelerometer' in window ) {
+				let acl = new Accelerometer({frequency: 1});
+				acl.addEventListener('activate', () => console.log('Ready to measure.'));
+				acl.addEventListener('error', error => console.log(`Error: ${error.name}`));
+				acl.addEventListener('reading', () => {
+					status.innerHTML = "x: " + acl.x + "<br>y: " + acl.y + "<br>z: " + acl.z;
+				});
+				document.getElementById("start").onclick = function() {acl.start()};
+				document.getElementById("stop").onclick = function() {acl.stop()};
+			}
+			else status.innerHTML = 'Accelerometer not supported';
+		</script>
+
 	</body>
 </html>
