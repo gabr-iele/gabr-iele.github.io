@@ -4,6 +4,8 @@ const subTopic = "devices/"+device_id+"/messages/devicebound/#";
 const pubTopic = "devices/"+device_id+"/messages/events/";
 const hubKey = "...";
 
+var client;
+
 function gen_sas_token(uri, key, expiry=60) {
     resourceUri = encodeURIComponent(uri);
 
@@ -23,7 +25,7 @@ function gen_sas_token(uri, key, expiry=60) {
 
 function startConnect() {
 
-    client = new Paho.MQTT.Client(hubName, Number(8883), device_id);
+    client = new Paho.MQTT.Client(hubName, Number(443), device_id);
 
     // Set callback handlers
     client.onMessageArrived = onMessageArrived;
@@ -32,8 +34,9 @@ function startConnect() {
     client.connect({
         onSuccess: onConnect,
         useSSL: true,
-        userName: hubName+"/"+device_id,
-        password: gen_sas_token(hubName+"/devices/"+device_id, hubKey)
+        userName: hubName+"/"+device_id+"/?api-version=2018-06-30",
+        password: gen_sas_token(hubName+"/devices/"+device_id, hubKey),
+        cleanSession: true
     });
 }
 
