@@ -1,11 +1,14 @@
 <html>
-    <head>
-		<script src="main.js"></script>
+	<head>
 	</head>
 	<body>
 
 		<h1>Accelerometer raw data</h1>
 		<div id="status">No data</div>
+
+		<button id="start">Start</button>
+		<button id="stop">Stop</button>
+
 		<script>
 			let status = document.getElementById('status');
 			if ( 'Accelerometer' in window ) {
@@ -14,9 +17,21 @@
 				acl.addEventListener('error', error => console.log(`Error: ${error.name}`));
 				acl.addEventListener('reading', () => {
 					status.innerHTML = "x: " + acl.x + "<br>y: " + acl.y + "<br>z: " + acl.z;
-					sendMsg(x,y,z);
+					var msg = {
+						x: acl.x,
+						y: acl.y,
+						z: acl.z
+					};
+					var xhr = new XMLHttpRequest();
+					xhr.open("POST", "192.168.1.91:8080", true);
+					xhr.send(msg);
 				});
-				acl.start();
+				document.getElementById("start").onclick = function() {
+					acl.start()
+				};
+				document.getElementById("stop").onclick = function() {
+					acl.stop();
+				};
 			}
 			else status.innerHTML = 'Accelerometer not supported';
 		</script>
