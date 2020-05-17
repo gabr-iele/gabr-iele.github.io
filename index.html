@@ -22,7 +22,7 @@
 				lacl.addEventListener('reading', () => {
                     status.innerHTML = "x: " + lacl.x + "<br>y: " + lacl.y + "<br>z: " + lacl.z;
                     var res = Math.sqrt(x*x + y*y + z*z);
-                    var activity = res > 0.5 ? "Moving" : "Still";
+                    var activity = res > 0.031 ? "Moving" : "Still";
                     document.getElementById("activity").innerHTML = activity;
                     sendToHub(activity);
 				});
