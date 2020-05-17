@@ -1,13 +1,17 @@
 <html>
-	<head>
-	</head>
-	<body>
+    <head>
 
-		<h1>Accelerometer raw data</h1>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/hmac-sha256.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/enc-base64.min.js"></script>
+		<script src="main_edge.js" defer></script>
+    </head>
+    <body>
+        <h1>Accelerometer raw data</h1>
 		<div id="status">No data</div>
-
+        <div id="activity">Still</div>
 		<button id="start">Start</button>
-		<button id="stop">Stop</button>
+        <button id="stop">Stop</button>
 
 		<script>
 			let status = document.getElementById('status');
@@ -16,18 +20,14 @@
 				acl.addEventListener('activate', () => console.log('Ready to measure.'));
 				acl.addEventListener('error', error => console.log(`Error: ${error.name}`));
 				acl.addEventListener('reading', () => {
-					status.innerHTML = "x: " + acl.x + "<br>y: " + acl.y + "<br>z: " + acl.z;
-					var msg = {
-						x: acl.x,
-						y: acl.y,
-						z: acl.z
-					};
-					var xhr = new XMLHttpRequest();
-					xhr.open("POST", "192.168.1.91:8080", true);
-					xhr.send(msg);
+                    status.innerHTML = "x: " + acl.x + "<br>y: " + acl.y + "<br>z: " + acl.z;
+                    var res = Math.sqrt(x*x + y*y + z*z);
+                    var activity = res > 0.5 ? "Moving" : "Still";
+                    document.getElementById("activity").innerHTML = activity;
+                    sendToHub(activity);
 				});
 				document.getElementById("start").onclick = function() {
-					acl.start();
+					acl.start()
 				};
 				document.getElementById("stop").onclick = function() {
 					acl.stop();
@@ -35,6 +35,5 @@
 			}
 			else status.innerHTML = 'Accelerometer not supported';
 		</script>
-
-	</body>
+    </body>
 </html>
