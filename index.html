@@ -7,7 +7,7 @@
 		<script src="main_edge.js" defer></script>
     </head>
     <body>
-        <h1>Accelerometer raw data</h1>
+        <h1>Linear Accelerometer raw data</h1>
 		<div id="status">No data</div>
         <div id="activity">Still</div>
 		<button id="start">Start</button>
@@ -15,25 +15,25 @@
 
 		<script>
 			let status = document.getElementById('status');
-			if ( 'Accelerometer' in window ) {
-				let acl = new Accelerometer({frequency: 1});
-				acl.addEventListener('activate', () => console.log('Ready to measure.'));
-				acl.addEventListener('error', error => console.log(`Error: ${error.name}`));
-				acl.addEventListener('reading', () => {
-                    status.innerHTML = "x: " + acl.x + "<br>y: " + acl.y + "<br>z: " + acl.z;
+			if ( 'LinearAccelerationSensor' in window ) {
+				let lacl = new LinearAccelerationSensor({frequency: 1});
+				lacl.addEventListener('activate', () => console.log('Ready to measure.'));
+				lacl.addEventListener('error', error => console.log(`Error: ${error.name}`));
+				lacl.addEventListener('reading', () => {
+                    status.innerHTML = "x: " + lacl.x + "<br>y: " + lacl.y + "<br>z: " + lacl.z;
                     var res = Math.sqrt(x*x + y*y + z*z);
                     var activity = res > 0.5 ? "Moving" : "Still";
                     document.getElementById("activity").innerHTML = activity;
                     sendToHub(activity);
 				});
 				document.getElementById("start").onclick = function() {
-					acl.start()
+					lacl.start()
 				};
 				document.getElementById("stop").onclick = function() {
-					acl.stop();
+					lacl.stop();
 				};
 			}
-			else status.innerHTML = 'Accelerometer not supported';
+			else status.innerHTML = 'Linear Accelerometer not supported';
 		</script>
     </body>
 </html>
