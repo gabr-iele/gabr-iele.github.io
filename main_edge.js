@@ -1,6 +1,6 @@
 const storageName = "iothwstorage";
 const tableName = "edgeDeployTable";
-const storageKey = "lU2GSVWSxqhgLxbgSjpFFZ3K2gNGOwqwbDtEIbp9c4fR2rVQyyUf+6CVz06B1ZiK6rTrwFs312Oq2pq9U2Dz5g==";
+const storageKey = "n5HKjzCke43NekIuvHiZMMJKvFZ6HLNDBIhb3vcMhlmMqfIBuQwScGRfZy4dEFDjNUEVDElWKCv2ek+Jz4bo7w==";
 
 function genRequest(uri) {
     var date = (new Date()).toUTCString();
